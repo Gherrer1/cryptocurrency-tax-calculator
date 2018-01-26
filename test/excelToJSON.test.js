@@ -19,7 +19,7 @@ describe('excelToJSON', function() {
       assert.throws(excel2JSON.bind(null, invalidFileName), /InvalidFileTypeError/);
     });
     it('should not throw InvalidFileError if file passed in ends with .xlsx', function() {
-      const validFileName = 'OrderHistory.xlsx';
+      const validFileName = 'mockOrderHistory.xlsx';
       assert.doesNotThrow(excel2JSON.bind(null, validFileName), /InvalidFileTypeError/);
     });
     it('should throw an error if file doesnt exist', function() {
@@ -27,11 +27,11 @@ describe('excelToJSON', function() {
       assert.throws(excel2JSON.bind(null, nonExistingFileName), /no such file or directory/);
     });
     it('should not throw an error if file exists', function() {
-      const existingFileName = 'OrderHistory.xlsx';
+      const existingFileName = 'mockOrderHistory.xlsx';
       assert.doesNotThrow(excel2JSON.bind(null, existingFileName), /no such file or directory/);
     });
     it('should return an array', function() {
-      const existingFileName = 'OrderHistory.xlsx';
+      const existingFileName = 'mockOrderHistory.xlsx';
       const json = excel2JSON(existingFileName);
       assert.isArray(json);
     });
