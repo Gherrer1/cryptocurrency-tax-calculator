@@ -1,0 +1,28 @@
+{
+  "name": "cryptocurrency-tax-calculator",
+  "version": "1.0.0",
+  "description": "Analyzes exported buy/sell data and historical prices to automatically calculate tax owed to you know who",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gherrer1/cryptocurrency-tax-calculator.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Gherrer1/cryptocurrency-tax-calculator/issues"
+  },
+  "homepage": "https://github.com/Gherrer1/cryptocurrency-tax-calculator#readme",
+  "dependencies": {
+    "excel": "^0.1.7"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^5.0.0",
+    "sinon": "^4.2.1"
+  }
+}
