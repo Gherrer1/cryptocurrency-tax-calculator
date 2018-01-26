@@ -1,4 +1,6 @@
 node_modules/
 OrderHistory.xlsx
+~$OrderHistory.xlsx
 mockOrderHistory.xlsx
+~$mockOrderHistory.xlsx
 tinker.js
