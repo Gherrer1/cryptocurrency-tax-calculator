@@ -1,4 +1,6 @@
 import txStrToObj from './txStrToObj';
+import excelUploadToJSON from './excelUploadToJSON';
+import getUploadedFile from './getUploadedFile';
 
 console.log('hey');
 
@@ -18,5 +20,13 @@ form.addEventListener('submit', function(e) {
     .map(line => `Deposit ${line}`)
     .map(txStrToObj);
   let allTrxs = depositsArr.concat(withdrawsArr).sort((trx1, trx2) => trx1.date - trx2.date);
-  console.log(allTrxs);
+  console.log('all deposits/withdraws:', allTrxs);
+
+  let uploadedFile = getUploadedFile('input[type="file"]');
+  if(!uploadedFile) {
+    console.log('No file uploaded.');
+    return;
+  }
+  excelUploadToJSON(uploadedFile)
+  .then(json => console.log('jrx json:', json));
 });
