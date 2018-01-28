@@ -1,7 +1,22 @@
+import txStrToObj from './txStrToObj';
 
 console.log('hey');
 
 const form = document.querySelector('form');
 form.addEventListener('submit', function(e) {
   e.preventDefault();
+
+  let withdraws = document.querySelector('textarea[name="bnbWithdraws"]');
+  let deposits = document.querySelector('textarea[name="bnbDeposits"]');
+
+  let withdrawsArr = withdraws.value.split('\n')
+    .filter(line => line.match(/^Completed/))
+    .map(line => `Withdraw ${line}`)
+    .map(txStrToObj);
+  let depositsArr = deposits.value.split('\n')
+    .filter(line => line.match(/^Completed/))
+    .map(line => `Deposit ${line}`)
+    .map(txStrToObj);
+  console.log(withdrawsArr);
+  console.log(depositsArr);
 });
