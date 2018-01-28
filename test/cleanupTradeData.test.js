@@ -3,47 +3,47 @@ const _ = require('lodash');
 const cleanupTradeData = require('../src/cleanupTradeData');
 
 describe('cleanupTradeData', function() {
+  let originalArr;
+  beforeEach(function() {
+    originalArr = [
+      {
+          "Date": "2017-12-22 03:05:55",
+          "Pair": "XRPBTC",
+          "Type": "BUY",
+          "Order Price": "0.000085",
+          "Order Amount": "550.0",
+          "Avg Trading Price": "0.00008498",
+          "Filled": "550.0",
+          "Total": "0.046739",
+          "status": "Filled"
+      },
+      {
+          "Pair": "Date",
+          "Type": "Trading Price",
+          "Order Price": "Filled",
+          "Order Amount": "Total",
+          "Avg Trading Price": "Fee"
+      },
+      {
+          "Pair": "2017-12-22 03:05:55",
+          "Type": "0.00008498",
+          "Order Price": "550",
+          "Order Amount": "0.04673900",
+          "Avg Trading Price": "0.55000000XRP"
+      },
+      {
+          "Date": "2017-12-22 03:01:19",
+          "Pair": "XRPBTC",
+          "Type": "BUY",
+          "Order Price": "0.00008899",
+          "Order Amount": "525.0",
+          "Avg Trading Price": "0.0",
+          "Filled": "0.0",
+          "Total": "0.0",
+          "status": "Canceled"
+      }];
+  });
   describe('removeCancelledOrders', function() {
-    let originalArr;
-    beforeEach(function() {
-      originalArr = [
-        {
-            "Date": "2017-12-22 03:05:55",
-            "Pair": "XRPBTC",
-            "Type": "BUY",
-            "Order Price": "0.000085",
-            "Order Amount": "550.0",
-            "Avg Trading Price": "0.00008498",
-            "Filled": "550.0",
-            "Total": "0.046739",
-            "status": "Filled"
-        },
-        {
-            "Pair": "Date",
-            "Type": "Trading Price",
-            "Order Price": "Filled",
-            "Order Amount": "Total",
-            "Avg Trading Price": "Fee"
-        },
-        {
-            "Pair": "2017-12-22 03:05:55",
-            "Type": "0.00008498",
-            "Order Price": "550",
-            "Order Amount": "0.04673900",
-            "Avg Trading Price": "0.55000000XRP"
-        },
-        {
-            "Date": "2017-12-22 03:01:19",
-            "Pair": "XRPBTC",
-            "Type": "BUY",
-            "Order Price": "0.00008899",
-            "Order Amount": "525.0",
-            "Avg Trading Price": "0.0",
-            "Filled": "0.0",
-            "Total": "0.0",
-            "status": "Canceled"
-        }];
-    });
     it('should throw error if first argument isnt array', function() {
       assert.throws(cleanupTradeData.removeCancelledOrders, /first argument should be an array of objects/);
     });
@@ -72,5 +72,8 @@ describe('cleanupTradeData', function() {
       let cleanedUpData = cleanupTradeData.removeCancelledOrders(originalArr);
       assert.deepEqual(cleanedUpData, originalArr);
     });
+  });
+  describe('consolidateFilledOrders', function() {
+
   });
 });
