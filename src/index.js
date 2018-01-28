@@ -17,6 +17,6 @@ form.addEventListener('submit', function(e) {
     .filter(line => line.match(/^Completed/))
     .map(line => `Deposit ${line}`)
     .map(txStrToObj);
-  console.log(withdrawsArr);
-  console.log(depositsArr);
+  let allTrxs = depositsArr.concat(withdrawsArr).sort((trx1, trx2) => trx1.date - trx2.date);
+  console.log(allTrxs);
 });
