@@ -1,6 +1,7 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-
-ReactDOM.render(<div>Hey</div>, document.getElementById('app'));
 
 console.log('hey');
+
+const form = document.querySelector('form');
+form.addEventListener('submit', function(e) {
+  e.preventDefault();
+});

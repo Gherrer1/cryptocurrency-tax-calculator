@@ -2,8 +2,29 @@
 <html>
 <head>
 	<title>Tax Calculator</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
+	<div class="container">
+		<form id="allHistoryForm" action="http://www.nba.com" method="GET">
+		  <div class="form-group">
+		    <label for="bnbWithdrawsTextarea">Binance Withdraws:</label>
+		    <textarea class="form-control" name="bnbWithdraws" id="bnbWithdrawsTextarea" rows="3"></textarea>
+		    <small class="form-text text-muted">Just copy and paste :)</small>
+		  </div>
+		  <div class="form-group">
+		  	<label for="bnbDepositsTextarea">Binance Deposits:</label>
+		  	<textarea class="form-control" name="bnbDeposits" id="bnbDepositsTextarea" rows="3"></textarea>
+		  	<small class="form-text text-muted">Just copy and paste :)</small>
+		  </div>
+		  <div class="form-group">
+		  	<label for="bnbTxHistory">Binance Transaction Spreadsheet</label>
+		  	<input type="file" name="txHistoryFile" class="form-control-file" id="bnbTxHistory">
+		  </div>
+		  <button type="submit" class="btn btn-primary">Submit</button>
+		</form>
+	</div>
+	
 <!-- 	<label>Deposits</label>
 	<br>
 	<textarea></textarea>
@@ -21,9 +42,10 @@
 			console.log(inputs[1].value.split('\n'));
 		});
 	</script> -->
-
-	<div id="app"></div>
-
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 	<script type="text/javascript" src="src/build/bundle.js"></script>
+
 </body>
 </html>
