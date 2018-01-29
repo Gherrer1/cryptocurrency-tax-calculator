@@ -30,5 +30,7 @@ form.addEventListener('submit', async function submitHandler(e) {
   }
   let transactionJSON = await excelUploadToJSON(uploadedFile);
   transactionJSON = prettifyBinanceJSON(transactionJSON);
-  console.log('trxs:', transactionJSON);
+
+  let allDepsWithsAndTrxs = allTrxs.concat(transactionJSON).sort((trx1, trx2) => trx1.date - trx2.date);
+  console.log('trxs:', allDepsWithsAndTrxs.map(trx => trx.type));
 });

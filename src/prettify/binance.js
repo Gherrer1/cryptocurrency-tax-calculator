@@ -11,9 +11,12 @@ function fluffActualOrderObject(_orderObj) {
   ['Avg Trading Price', 'Filled', 'Order Amount', 'Order Price', 'Total']
     .forEach(fieldWithNumericValue => orderObj[fieldWithNumericValue] = Number(orderObj[fieldWithNumericValue]));
   orderObj.exchange = 'binance';
+  orderObj.type = orderObj.Type;
+  delete orderObj.Type;
   orderObj.fillDetails = [];
   let [dateStr, timeStr] = orderObj.Date.split(' ');
-  orderObj.Date = isoFormat(dateStr, timeStr);
+  orderObj.date = isoFormat(dateStr, timeStr);
+  delete orderObj.Date;
   return orderObj;
 }
 
