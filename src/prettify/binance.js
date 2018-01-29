@@ -8,20 +8,20 @@ export default function prettifyBinanceJSON(transactionJSON) {
 }
 
 function fluffActualOrderObject(_orderObj) {
-  let orderObj = _.cloneDeep(_orderObj);
-  const [lhs, rhs] = splitTradePairsStr(orderObj.Pair);
-  delete orderObj.Pair;
+  const orderObj = Object.create(null);
+  orderObj.type = _orderObj.Type;
+  const [lhs, rhs] = splitTradePairsStr(_orderObj.Pair);
   orderObj.lhs = lhs;
   orderObj.rhs = rhs;
-  ['Avg Trading Price', 'Filled', 'Order Amount', 'Order Price', 'Total']
-    .forEach(fieldWithNumericValue => orderObj[fieldWithNumericValue] = Number(orderObj[fieldWithNumericValue]));
+  orderObj.filled = Number(_orderObj.Filled);
+  orderObj.orderAmount = Number(_orderObj['Order Amount']);
+  orderObj.total = Number(_orderObj.Total);
   orderObj.exchange = 'binance';
-  orderObj.type = orderObj.Type;
-  delete orderObj.Type;
   orderObj.fillDetails = [];
-  let [dateStr, timeStr] = orderObj.Date.split(' ');
+  orderObj.orderPrice = Number(_orderObj['Order Price']);
+  let [dateStr, timeStr] = _orderObj.Date.split(' ');
   orderObj.date = isoFormat(dateStr, timeStr);
-  delete orderObj.Date;
+
   return orderObj;
 }
 

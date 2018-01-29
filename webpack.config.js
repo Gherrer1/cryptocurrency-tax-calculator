@@ -1,6 +1,7 @@
 const path = require('path');
 
 module.exports = {
+  devtool: 'source-map',
   entry: ['babel-polyfill', './src/index.js'],
   output: {
     path: path.resolve(__dirname, 'src/build'),

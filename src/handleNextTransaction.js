@@ -1,3 +1,4 @@
+// TODO: handle withdraw fee???
 export default function handleNextTransaction(event, transactions, balance) {
   if(!transactions || !balance) return;
 
@@ -8,6 +9,20 @@ export default function handleNextTransaction(event, transactions, balance) {
     handleWithdraw(nextEarliestTransaction, balance);
   else if(nextEarliestTransaction.type === 'Deposit')
     handleDeposit(nextEarliestTransaction, balance);
+  else if(nextEarliestTransaction.type === 'SELL' || nextEarliestTransaction.type === 'BUY') {
+    let selling =  (nextEarliestTransaction.type === 'SELL');
+    let depositInfo = {
+      currency: nextEarliestTransaction[selling ? 'rhs' : 'lhs'],
+      amount: nextEarliestTransaction[selling ? 'total' : 'filled']
+    };
+    let withdrawInfo = {
+      currency: nextEarliestTransaction[selling ? 'lhs' : 'rhs'],
+      amount: nextEarliestTransaction[selling ? 'filled' : 'total']
+    };
+    handleDeposit(depositInfo, balance);
+    handleWithdraw(withdrawInfo, balance);
+    // fees
+  }
 
   console.log(nextEarliestTransaction);
   console.log(balance);
