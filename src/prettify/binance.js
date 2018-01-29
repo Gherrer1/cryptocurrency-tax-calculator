@@ -1,6 +1,7 @@
 const _ = require('lodash');
 import isoFormat from '../isoFormat';
 import splitFeeAndCoin from '../splitFeeAndCoin';
+import splitTradePairsStr from '../splitTradePairs';
 
 export default function prettifyBinanceJSON(transactionJSON) {
   return consolidateFillData( removeCancelledOrders(transactionJSON) );
@@ -8,6 +9,10 @@ export default function prettifyBinanceJSON(transactionJSON) {
 
 function fluffActualOrderObject(_orderObj) {
   let orderObj = _.cloneDeep(_orderObj);
+  const [lhs, rhs] = splitTradePairsStr(orderObj.Pair);
+  delete orderObj.Pair;
+  orderObj.lhs = lhs;
+  orderObj.rhs = rhs;
   ['Avg Trading Price', 'Filled', 'Order Amount', 'Order Price', 'Total']
     .forEach(fieldWithNumericValue => orderObj[fieldWithNumericValue] = Number(orderObj[fieldWithNumericValue]));
   orderObj.exchange = 'binance';
