@@ -13,20 +13,18 @@ export default function handleNextTransaction(event, transactions, balance) {
   console.log(balance);
 }
 
-function handleDeposit(transaction, balance) {
-  let {currency} = transaction;
+function handleDeposit({ currency, amount }, balance) {
   if(!balance[currency]) {
     balance[currency] = 0;
   }
 
-  balance[currency] += transaction.amount;
+  balance[currency] += amount;
 }
 
-function handleWithdraw(transaction, balance) {
-  let {currency} = transaction;
+function handleWithdraw({ currency, amount }, balance) {
   if(!balance[currency]) {
     balance[currency] = 0;
   }
 
-  balance[currency] -= transaction.amount;
+  balance[currency] -= amount;
 }
