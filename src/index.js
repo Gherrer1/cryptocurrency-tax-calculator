@@ -1,11 +1,12 @@
 import txStrToObj from './txStrToObj';
 import excelUploadToJSON from './excelUploadToJSON';
 import getUploadedFile from './getUploadedFile';
+import prettifyBinanceJSON from './prettify/binance';
 
 console.log('hey');
 
 const form = document.querySelector('form');
-form.addEventListener('submit', function(e) {
+form.addEventListener('submit', async function submitHandler(e) {
   e.preventDefault();
 
   let withdraws = document.querySelector('textarea[name="bnbWithdraws"]');
@@ -27,6 +28,7 @@ form.addEventListener('submit', function(e) {
     console.log('No file uploaded.');
     return;
   }
-  excelUploadToJSON(uploadedFile)
-  .then(json => console.log('jrx json:', json));
+  let transactionJSON = await excelUploadToJSON(uploadedFile);
+  transactionJSON = prettifyBinanceJSON(transactionJSON);
+  console.log('trxs:', transactionJSON);
 });
