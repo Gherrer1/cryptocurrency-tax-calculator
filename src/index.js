@@ -30,32 +30,28 @@ form.addEventListener('submit', async function submitHandler(e) {
   let withdraws = document.querySelector('textarea[name="bnbWithdraws"]');
   let deposits = document.querySelector('textarea[name="bnbDeposits"]');
 
-  let withdrawsArr = withdraws.value.split('\n')
-    .filter(line => line.match(/^Completed/))
-    .map(line => `Withdraw ${line}`)
-    .map(txStrToObj);
-  let depositsArr = deposits.value.split('\n')
-    .filter(line => line.match(/^Completed/))
-    .map(line => `Deposit ${line}`)
-    .map(txStrToObj);
-  let allTrxs = depositsArr.concat(withdrawsArr).sort((trx1, trx2) => trx1.date - trx2.date);
-  // console.log('all deposits/withdraws:', allTrxs);
+  let withdrawsArr = withdraws.value.split('\n').filter(line => line.match(/^Completed/))
+                    .map(line => `Withdraw ${line}`).map(txStrToObj);
+  let depositsArr = deposits.value.split('\n').filter(line => line.match(/^Completed/))
+                    .map(line => `Deposit ${line}`).map(txStrToObj);
+  let allDepositsAndWithdraws = depositsArr.concat(withdrawsArr).sort((trx1, trx2) => trx1.date - trx2.date);
+  // console.log('all deposits/withdraws:', allDepositsAndWithdraws);
 
   let uploadedFile = getUploadedFile('input[type="file"]');
   if(!uploadedFile) {
-    console.log('No file uploaded.');
-    globalTransactionsData = allTrxs;
+    // console.log('No file uploaded.');
+    globalTransactionsData = allDepositsAndWithdraws;
     globalBalanceState = {};
     revealNextStateButton();
     return;
   }
-  let transactionJSON = await excelUploadToJSON(uploadedFile);
-  transactionJSON = prettifyBinanceJSON(transactionJSON);
+  let tradeArr = await excelUploadToJSON(uploadedFile);
+  tradeArr = prettifyBinanceJSON(tradeArr);
 
-  let allDepsWithsAndTrxs = allTrxs.concat(transactionJSON).sort((trx1, trx2) => trx1.date - trx2.date);
-  globalTransactionsData = allDepsWithsAndTrxs;
+  let allDepsWithsAndTrades = allDepositsAndWithdraws.concat(tradeArr).sort((trx1, trx2) => trx1.date - trx2.date);
+  console.log(allDepsWithsAndTrades);
+  globalTransactionsData = allDepsWithsAndTrades;
   globalBalanceState = {};
-  // add button, each time we click we pop a transaction off stack and edit balance
   revealNextStateButton();
 });
 
