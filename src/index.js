@@ -2,8 +2,14 @@ import txStrToObj from './txStrToObj';
 import excelUploadToJSON from './excelUploadToJSON';
 import getUploadedFile from './getUploadedFile';
 import prettifyBinanceJSON from './prettify/binance';
+import handleNextTransaction from './handleNextTransaction';
 
-console.log('hey');
+
+let globalTransactionsData;
+let globalBalanceState;
+
+const nextStateButton = document.querySelector('#next-state');
+nextStateButton.addEventListener('click', (e) => handleNextTransaction(e, globalTransactionsData, globalBalanceState));
 
 const form = document.querySelector('form');
 form.addEventListener('submit', async function submitHandler(e) {
@@ -21,16 +27,26 @@ form.addEventListener('submit', async function submitHandler(e) {
     .map(line => `Deposit ${line}`)
     .map(txStrToObj);
   let allTrxs = depositsArr.concat(withdrawsArr).sort((trx1, trx2) => trx1.date - trx2.date);
-  console.log('all deposits/withdraws:', allTrxs);
+  // console.log('all deposits/withdraws:', allTrxs);
 
   let uploadedFile = getUploadedFile('input[type="file"]');
   if(!uploadedFile) {
     console.log('No file uploaded.');
+    globalTransactionsData = allTrxs;
+    globalBalanceState = {};
+    revealNextStateButton();
     return;
   }
   let transactionJSON = await excelUploadToJSON(uploadedFile);
   transactionJSON = prettifyBinanceJSON(transactionJSON);
 
   let allDepsWithsAndTrxs = allTrxs.concat(transactionJSON).sort((trx1, trx2) => trx1.date - trx2.date);
-  console.log('trxs:', allDepsWithsAndTrxs.map(trx => trx.type));
+  globalTransactionsData = allDepsWithsAndTrxs;
+  globalBalanceState = {};
+  // add button, each time we click we pop a transaction off stack and edit balance
+  revealNextStateButton();
 });
+
+function revealNextStateButton() {
+  document.getElementById('next-state').style.display = 'inline';
+}
