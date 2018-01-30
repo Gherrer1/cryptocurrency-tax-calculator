@@ -3,7 +3,7 @@ import isoFormat from '../isoFormat';
 import splitFeeAndCoin from '../splitFeeAndCoin';
 import splitTradePairsStr from '../splitTradePairs';
 
-export default function prettifyBinanceJSON(transactionJSON) {
+function prettifyTradeJSON(transactionJSON) {
   return consolidateFillData( removeCancelledOrders(transactionJSON) );
 }
 
@@ -74,3 +74,23 @@ function removeCancelledOrders(orders) {
   const ordersCopy = _.cloneDeep(orders);
   return ordersCopy.filter( data => data.status ? data.status !== 'Canceled' : true );
 }
+
+function commonDepositAndWithdrawPrettifier(json) {
+  let newJSON = _.cloneDeep(json).filter(obj => obj.Status === 'Completed').map(obj => {
+    delete obj.Address;
+    delete obj.TXID;
+    return obj;
+  });
+
+  return newJSON;
+}
+
+
+
+const binancePrettifyAPI = {
+  deposit: commonDepositAndWithdrawPrettifier,
+  withdraw: commonDepositAndWithdrawPrettifier,
+  trades: prettifyTradeJSON
+};
+
+module.exports = binancePrettifyAPI;
