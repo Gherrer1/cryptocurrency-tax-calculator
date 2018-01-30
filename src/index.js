@@ -34,27 +34,11 @@ document.querySelector('form').addEventListener('submit', async function submitH
     tradesArray = prettify.binance.trades( await excelUploadToJSON(tradesFile) );
   }
 
-  console.log('withdrawsarray:', withdrawsArray);
-  console.log('depositsArray:', depositsArray);
-  console.log('tradesarray:', tradesArray);
+  // sort by date
+  const allHistoryArray = depositsArray.concat(withdrawsArray).concat(tradesArray).sort((trx1, trx2) => trx1.date - trx2.date);
+  console.log(allHistoryArray);
 
-  // let uploadedFile = getUploadedFile('input[type="file"]');
-  // if(!uploadedFile) {
-  //   // console.log('No file uploaded.');
-  //   globalTransactionsData = allDepositsAndWithdraws;
-  //   globalBalanceState = {};
-  //   revealNextStateButton();
-  //   return;
-  // }
-
-  //
-  // let allDepsWithsAndTrades = allDepositsAndWithdraws.concat(tradeArr).sort((trx1, trx2) => trx1.date - trx2.date);
-  // console.log(allDepsWithsAndTrades);
-  // globalTransactionsData = allDepsWithsAndTrades;
-  // globalBalanceState = {};
-  // revealNextStateButton();
-});
-
-function revealNextStateButton() {
+  globalTransactionsData = allHistoryArray;
+  globalBalanceState = {};
   document.getElementById('next-state').style.display = 'inline';
-}
+});
