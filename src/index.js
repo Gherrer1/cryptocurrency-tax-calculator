@@ -36,7 +36,6 @@ document.querySelector('form').addEventListener('submit', async function submitH
 
   // sort by date
   const allHistoryArray = depositsArray.concat(withdrawsArray).concat(tradesArray).sort((trx1, trx2) => trx1.date - trx2.date);
-  console.log(allHistoryArray);
 
   globalTransactionsData = allHistoryArray;
   globalBalanceState = {};

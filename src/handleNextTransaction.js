@@ -24,7 +24,6 @@ export default function handleNextTransaction(event, transactions, balance) {
       handleWithdraw(withdrawInfo, balance);
       // fees
       nextEarliestTransaction.fillDetails.forEach(fillDetail => {
-        console.log('a fill detail');
         let withdrawInfo = {
           currency: fillDetail.fee.coin,
           amount: fillDetail.fee.value
@@ -32,10 +31,8 @@ export default function handleNextTransaction(event, transactions, balance) {
         handleWithdraw(withdrawInfo, balance);
       });
     }
-
-    console.log(nextEarliestTransaction);
-    console.log(balance);
   }
+  console.log(balance);
 }
 
 function handleDeposit({ currency, amount }, balance) {
