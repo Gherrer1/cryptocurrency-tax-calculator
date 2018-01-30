@@ -82,6 +82,10 @@ function commonDepositAndWithdrawPrettifier(type, json) {
     obj.type = type;
     obj.date = isoFormat(...obj.Date.split(' '));
     delete obj.Date;
+    obj.currency = obj.Coin;
+    delete obj.Coin;
+    obj.amount = Number(obj.Amount);
+    delete obj.Amount;
     return obj;
   });
 
