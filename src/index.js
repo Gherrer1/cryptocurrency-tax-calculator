@@ -2,6 +2,8 @@ import txStrToObj from './txStrToObj';
 import excelUploadToJSON from './excelUploadToJSON';
 import getUploadedFile from './getUploadedFile';
 import handleNextTransaction from './handleNextTransaction';
+import handleAllTransactions from './handleAllTransactions';
+import createTableRow from './createTableRow';
 const prettify = require('./prettify');
 
 
@@ -9,7 +11,15 @@ let globalTransactionsData;
 let globalBalanceState;
 
 const nextStateButton = document.querySelector('#next-state');
-nextStateButton.addEventListener('click', (e) => handleNextTransaction(e, globalTransactionsData, globalBalanceState));
+// nextStateButton.addEventListener('click', (e) => handleNextTransaction(e, globalTransactionsData, globalBalanceState));
+nextStateButton.addEventListener('click', (e) => {
+  globalBalanceState = handleAllTransactions(e, globalTransactionsData, globalBalanceState);
+  const tableBody = document.querySelector('#table-body')
+  Object.keys(globalBalanceState).forEach(coin => {
+    let amount = globalBalanceState[coin].toFixed(8);
+    tableBody.appendChild( createTableRow(coin, amount) );
+  });
+});
 
 document.querySelector('form').addEventListener('submit', async function submitHandler(e) {
   e.preventDefault();
@@ -40,4 +50,5 @@ document.querySelector('form').addEventListener('submit', async function submitH
   globalTransactionsData = allHistoryArray;
   globalBalanceState = {};
   document.getElementById('next-state').style.display = 'inline';
+  document.querySelector('table').style.display = 'table';
 });
