@@ -3,7 +3,7 @@ import excelUploadToJSON from './excelUploadToJSON';
 import getUploadedFile from './getUploadedFile';
 import handleNextTransaction from './handleNextTransaction';
 import handleAllTransactions from './handleAllTransactions';
-import createTableRow from './createTableRow';
+import fillTable from './fillTable';
 const prettify = require('./prettify');
 
 
@@ -14,11 +14,7 @@ const nextStateButton = document.querySelector('#next-state');
 // nextStateButton.addEventListener('click', (e) => handleNextTransaction(e, globalTransactionsData, globalBalanceState));
 nextStateButton.addEventListener('click', (e) => {
   globalBalanceState = handleAllTransactions(e, globalTransactionsData, globalBalanceState);
-  const tableBody = document.querySelector('#table-body')
-  Object.keys(globalBalanceState).forEach(coin => {
-    let amount = globalBalanceState[coin].toFixed(8);
-    tableBody.appendChild( createTableRow(coin, amount) );
-  });
+  fillTable(globalBalanceState, '#table-body');
 });
 
 document.querySelector('form').addEventListener('submit', async function submitHandler(e) {
