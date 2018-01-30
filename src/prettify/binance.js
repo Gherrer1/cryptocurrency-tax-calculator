@@ -75,10 +75,13 @@ function removeCancelledOrders(orders) {
   return ordersCopy.filter( data => data.status ? data.status !== 'Canceled' : true );
 }
 
-function commonDepositAndWithdrawPrettifier(json) {
+function commonDepositAndWithdrawPrettifier(type, json) {
   let newJSON = _.cloneDeep(json).filter(obj => obj.Status === 'Completed').map(obj => {
     delete obj.Address;
     delete obj.TXID;
+    obj.type = type;
+    obj.date = isoFormat(...obj.Date.split(' '));
+    delete obj.Date;
     return obj;
   });
 
@@ -88,8 +91,8 @@ function commonDepositAndWithdrawPrettifier(json) {
 
 
 const binancePrettifyAPI = {
-  deposit: commonDepositAndWithdrawPrettifier,
-  withdraw: commonDepositAndWithdrawPrettifier,
+  deposit: commonDepositAndWithdrawPrettifier.bind(null, 'Deposit'),
+  withdraw: commonDepositAndWithdrawPrettifier.bind(null, 'Withdraw'),
   trades: prettifyTradeJSON
 };
 
